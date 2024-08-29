@@ -14,6 +14,7 @@ git add pom.xml
 git commit -m "cicd: bump version ${APP}:${APP_VERSION}"
 
 cd "$ROOT"
-TAG=$APP_VERSION docker compse build --no-cache "$APP"
+
+TAG=$APP_VERSION docker compose build --no-cache "$APP"
 
 docker images "dio/${APP}"
