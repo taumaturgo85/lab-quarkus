@@ -1,13 +1,11 @@
 package domain;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.InjectMock;
 import org.instancio.Instancio;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
+import jakarta.inject.Inject;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -20,24 +18,19 @@ import static org.mockito.Mockito.when;
 
 @QuarkusTest
 class CandidateServiceTest {
-
-    @InjectMocks
+    @Inject
     CandidateService service;
 
-    @Mock
+    @InjectMock
     CandidateRepository repository;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void save() {
-        Candidate candidate = Instancio.create(Candidate.class);
-        service.save(candidate);
+        var domain = Instancio.create(Candidate.class);
 
-        verify(repository).save(candidate);
+        service.save(domain);
+
+        verify(repository).save(domain);
         verifyNoMoreInteractions(repository);
     }
 
